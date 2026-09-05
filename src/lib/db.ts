@@ -13,9 +13,13 @@ declare global {
 
 function createConnection(): DatabaseSync {
   const db = new DatabaseSync(DB_PATH);
+  // busy_timeout must be set before anything that can contend for a lock
+  // (journal_mode included) so concurrent connections wait instead of
+  // failing immediately with "database is locked" — this matters at build
+  // time, when Next spins up several workers that each import this module.
+  db.exec("PRAGMA busy_timeout = 5000;");
   db.exec("PRAGMA journal_mode = WAL;");
   db.exec("PRAGMA foreign_keys = ON;");
-  db.exec("PRAGMA busy_timeout = 5000;");
   return db;
 }
 

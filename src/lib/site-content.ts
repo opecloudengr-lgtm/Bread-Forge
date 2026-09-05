@@ -7,8 +7,8 @@ export const siteConfig = {
   address: "The House of His Glory Event Centre, MFM Junction, Tanke, Ilorin, Nigeria",
   phone: "0913 288 6962",
   serviceTimes: [
-    { day: "Wednesday", time: "5:00 PM" },
-    { day: "Sunday", time: "2:30 PM" },
+    { day: "Wednesday", time: "5:00 PM — Worship Service" },
+    { day: "Sunday", time: "2:30 PM — Worship Service" },
   ],
   socials: [
     { label: "WhatsApp", href: "https://chat.whatsapp.com/IEFI4QVEFjy7jmQZKnf3Eu?s=cl&p=a&ilr=1" },
