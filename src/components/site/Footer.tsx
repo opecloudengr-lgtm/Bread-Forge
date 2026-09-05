@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-content";
+import { Logo } from "@/components/site/Logo";
 
 export function Footer() {
   return (
@@ -7,8 +8,8 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <p className="font-display text-lg font-semibold text-gold-light">{siteConfig.name}</p>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed">
+            <Logo size={56} />
+            <p className="mt-4 max-w-xs text-sm leading-relaxed">
               {siteConfig.mandateVerse}
               <br />
               <span className="text-xs text-parchment/50">{siteConfig.mandateReferences}</span>

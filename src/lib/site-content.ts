@@ -12,12 +12,20 @@ export const siteConfig = {
     { day: "Friday", time: "7:00 PM — Prayer & Warfare" },
   ],
   socials: [
-    { label: "Facebook", href: "https://facebook.com" },
-    { label: "Instagram", href: "https://instagram.com" },
-    { label: "Telegram", href: "https://t.me" },
-    { label: "Mixlr", href: "https://mixlr.com" },
-    { label: "Spotify", href: "https://open.spotify.com" },
+    { label: "WhatsApp", href: "https://chat.whatsapp.com/IEFI4QVEFjy7jmQZKnf3Eu?s=cl&p=a&ilr=1" },
+    { label: "Facebook", href: "https://www.facebook.com/share/1EhAyTTVAy/" },
+    { label: "Instagram", href: "https://www.instagram.com/accn.global?igsi=M2xnbXVsb2lqYWJ6" },
+    { label: "Telegram", href: "https://t.me/ACCNGLOBAL" },
+    { label: "YouTube", href: "https://youtube.com/@accnglobal?si=mpjoenVZIuHOZVYo" },
+    { label: "Mixlr", href: "https://accnglobal.mixlr.com/" },
+    {
+      label: "Spotify",
+      href: "https://open.spotify.com/show/0pz461SvbXBwSFVV1d9BQO?utm_source=ig&utm_medium=social&utm_content=link_in_bio",
+    },
   ],
+  whatsappCommunity: "https://chat.whatsapp.com/IEFI4QVEFjy7jmQZKnf3Eu?s=cl&p=a&ilr=1",
+  partnerFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSdaJ4gmkJtRAOMmTN-QU8n-fFdZRdQcU25640Wotb7fIw4_xg/viewform?pli=1",
   nav: [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },

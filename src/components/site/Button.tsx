@@ -15,9 +15,28 @@ interface LinkButtonProps {
   variant?: keyof typeof variants;
   className?: string;
   children: ReactNode;
+  external?: boolean;
 }
 
-export function LinkButton({ href, variant = "primary", className = "", children }: LinkButtonProps) {
+export function LinkButton({
+  href,
+  variant = "primary",
+  className = "",
+  children,
+  external = false,
+}: LinkButtonProps) {
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${base} ${variants[variant]} ${className}`}
+      >
+        {children}
+      </a>
+    );
+  }
   return (
     <Link href={href} className={`${base} ${variants[variant]} ${className}`}>
       {children}

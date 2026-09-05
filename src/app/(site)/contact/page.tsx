@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { MotionSection } from "@/components/site/MotionSection";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { LinkButton } from "@/components/site/Button";
 import { siteConfig } from "@/lib/site-content";
 
 export const metadata: Metadata = {
@@ -38,6 +39,20 @@ export default function ContactPage() {
       </div>
 
       <MotionSection delay={0.2} className="mt-8">
+        <div className="rounded-2xl border border-gold/30 bg-ink p-8 text-center shadow-sm">
+          <h3 className="font-display text-lg font-semibold text-gold-light">Join Our WhatsApp Community</h3>
+          <p className="mx-auto mt-2 max-w-md text-sm text-parchment/70">
+            Get sermon notes, event updates, and prayer requests straight from the ministry.
+          </p>
+          <div className="mt-5">
+            <LinkButton href={siteConfig.whatsappCommunity} external>
+              Join the Group
+            </LinkButton>
+          </div>
+        </div>
+      </MotionSection>
+
+      <MotionSection delay={0.3} className="mt-8">
         <div className="rounded-2xl border border-ink/10 bg-white p-8 text-center shadow-sm">
           <h3 className="font-display text-lg font-semibold text-ink">Follow Us</h3>
           <div className="mt-4 flex flex-wrap justify-center gap-3">

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { siteConfig } from "@/lib/site-content";
+import { Logo } from "@/components/site/Logo";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -30,9 +31,7 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="font-display text-xl font-bold tracking-wide text-gold-light">
-          {siteConfig.name}
-        </Link>
+        <Logo size={44} />
 
         <div className="hidden items-center gap-8 md:flex">
           {siteConfig.nav.map((item) => {

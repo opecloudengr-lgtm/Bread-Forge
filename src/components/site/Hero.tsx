@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { LinkButton } from "@/components/site/Button";
 import { siteConfig } from "@/lib/site-content";
@@ -7,8 +8,16 @@ import { siteConfig } from "@/lib/site-content";
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-parchment">
-      <div className="bg-grain absolute inset-0 opacity-40" />
-      <div className="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-gold/20 blur-3xl" />
+      <Image
+        src="/brand/pastor-preaching.jpg"
+        alt="A minister preaching at Adullam Cave Christian Network"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-[50%_25%]"
+      />
+      <div className="absolute inset-0 bg-ink/70" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink to-transparent" />
 
       <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 py-32 text-center sm:py-40">
         <motion.p

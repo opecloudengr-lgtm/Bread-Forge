@@ -47,8 +47,3 @@ body {
   background: var(--color-gold);
   color: var(--color-ink);
 }
-
-.bg-grain {
-  background-image: radial-gradient(circle at 1px 1px, rgba(28, 20, 16, 0.05) 1px, transparent 0);
-  background-size: 22px 22px;
-}

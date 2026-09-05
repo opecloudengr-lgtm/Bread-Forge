@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { MotionSection } from "@/components/site/MotionSection";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { LinkButton } from "@/components/site/Button";
 import { givingInfo, siteConfig } from "@/lib/site-content";
 
 export const metadata: Metadata = {
@@ -18,7 +19,22 @@ export default function PartnershipPage() {
         description={`AKS is the partnership arm of ${siteConfig.ministry} — a company of stewards who give proactively toward the mandate and toward benevolence in the community.`}
       />
 
-      <MotionSection className="mt-12 rounded-2xl border border-ink/10 bg-white p-8 shadow-sm">
+      <MotionSection delay={0.05} className="mt-8">
+        <div className="rounded-2xl border border-gold/30 bg-white p-8 text-center shadow-sm">
+          <h3 className="font-display text-xl font-semibold text-ink">Become an Adullam Kingdom Steward</h3>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-ink/70">
+            Tell us how you&apos;d like to partner — in giving, service, or prayer — and a member of the
+            team will follow up with you.
+          </p>
+          <div className="mt-5">
+            <LinkButton href={siteConfig.partnerFormUrl} external>
+              Fill the Partner Form
+            </LinkButton>
+          </div>
+        </div>
+      </MotionSection>
+
+      <MotionSection className="mt-8 rounded-2xl border border-ink/10 bg-white p-8 shadow-sm">
         <h3 className="font-display text-xl font-semibold text-ink">Project Update: The Bread Forge</h3>
         <p className="mt-3 leading-relaxed text-ink/70">{givingInfo.projectUpdate}</p>
       </MotionSection>
