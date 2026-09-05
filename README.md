@@ -38,12 +38,34 @@ Generate a secret for `AUTH_SECRET`:
 node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
 ```
 
+To see the site populated instead of empty on first run:
+
+```bash
+npm run seed:demo
+```
+
+This adds 5 sample sermons (across all categories) and 4 sample events (upcoming + past, with
+photos/PDF flyers) directly to the database. It only touches empty tables — safe to run once after
+first install, and it no-ops (with a message) if sermons or events already exist, unless you pass
+`-- --force`. The placeholder audio is silent and the images/PDFs are solid-color/text stand-ins
+generated on the fly (no external assets, nothing to download) — replace them with real media from
+the admin dashboard whenever you're ready to go live.
+
 ### Scripts
 
 - `npm run dev` — start the dev server (Turbopack)
 - `npm run build` — production build (also runs the TypeScript check)
 - `npm run start` — run the production build
 - `npm run lint` — ESLint
+- `npm run seed:demo` — add sample sermons/events for demos (see above)
+
+## CI
+
+`.github/workflows/ci.yml` runs on every push to `main` and on pull requests: install, lint, build,
+then boot the production build and hit every public route plus the admin-gate redirect and one API
+route to confirm the server actually serves traffic (not just that it compiles). No external services
+or secrets are required — it uses throwaway `AUTH_SECRET`/`ADMIN_EMAIL`/`ADMIN_PASSWORD` values scoped
+to the CI run.
 
 ## Project layout
 

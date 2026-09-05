@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    env:
+      AUTH_SECRET: ci-only-secret-not-used-in-production-0123456789
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD: ci-smoke-test-password
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test (boot the server and hit key routes)
+        run: |
+          npm run start -- -p 3100 &
+          SERVER_PID=$!
+
+          READY=""
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3100/ > /dev/null; then
+              READY=1
+              break
+            fi
+            sleep 1
+          done
+          if [ -z "$READY" ]; then
+            echo "Server did not become ready in time"
+            kill "$SERVER_PID" 2>/dev/null || true
+            exit 1
+          fi
+
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:3100$1")
+            if [ "$code" != "$2" ]; then
+              echo "FAIL: $1 expected $2, got $code"
+              fail=1
+            else
+              echo "OK: $1 -> $code"
+            fi
+          }
+
+          check "/" 200
+          check "/about" 200
+          check "/sermons" 200
+          check "/events" 200
+          check "/partnership" 200
+          check "/contact" 200
+          check "/admin/login" 200
+          check "/admin" 307
+          check "/api/categories" 200
+
+          kill "$SERVER_PID" 2>/dev/null || true
+          exit $fail
