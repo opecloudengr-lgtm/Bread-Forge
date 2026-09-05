@@ -46,3 +46,24 @@ export interface AdminSession {
   adminId: string;
   email: string;
 }
+
+export interface Announcement {
+  id: string;
+  title: string;
+  message: string;
+  imageUrl: string | null;
+  videoUrl: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type GalleryItemType = "image" | "video";
+
+export interface GalleryItem {
+  id: string;
+  type: GalleryItemType;
+  fileUrl: string;
+  caption: string;
+  sortOrder: number;
+  createdAt: string;
+}

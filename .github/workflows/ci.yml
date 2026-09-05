@@ -65,11 +65,14 @@ jobs:
           check "/about" 200
           check "/sermons" 200
           check "/events" 200
+          check "/gallery" 200
           check "/partnership" 200
           check "/contact" 200
           check "/admin/login" 200
           check "/admin" 307
           check "/api/categories" 200
+          check "/api/announcements" 200
+          check "/api/gallery" 200
 
           kill "$SERVER_PID" 2>/dev/null || true
           exit $fail

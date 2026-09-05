@@ -84,6 +84,27 @@ CREATE TABLE IF NOT EXISTS event_media (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS announcement (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  message TEXT NOT NULL DEFAULT '',
+  image_url TEXT,
+  video_url TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS gallery_item (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  file_url TEXT NOT NULL,
+  caption TEXT NOT NULL DEFAULT '',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE INDEX IF NOT EXISTS idx_announcement_created ON announcement(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_gallery_item_created ON gallery_item(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_sermon_date ON sermon(date_preached DESC);
 CREATE INDEX IF NOT EXISTS idx_event_date ON event(event_date DESC);
 CREATE INDEX IF NOT EXISTS idx_event_media_event ON event_media(event_id);

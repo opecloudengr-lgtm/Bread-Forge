@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <div className="mx-auto max-w-4xl px-6 py-20">
-      <SectionHeading eyebrow="Contact" title="We'd love to connect with you" />
+      <MotionSection>
+        <SectionHeading eyebrow="Contact" title="We'd love to connect with you" />
+      </MotionSection>
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2">
         <MotionSection direction="left">

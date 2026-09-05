@@ -10,6 +10,7 @@ import { DatabaseSync } from "node:sqlite";
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import zlib from "node:zlib";
+import { SCHEMA } from "./schema.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const DB_PATH = process.env.DATABASE_PATH || path.join(projectRoot, "data", "bread-forge.db");
@@ -21,39 +22,11 @@ const db = new DatabaseSync(DB_PATH);
 db.exec("PRAGMA foreign_keys = ON;");
 db.exec("PRAGMA busy_timeout = 5000;");
 
-// --- Minimal schema bootstrap (mirrors src/lib/db.ts) in case this runs
-// before the Next.js server has created the tables yet. ---
-db.exec(`
-CREATE TABLE IF NOT EXISTS admin (
-  id TEXT PRIMARY KEY, email TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL,
-  reset_token_hash TEXT, reset_token_expires_at TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')), last_login_at TEXT
-);
-CREATE TABLE IF NOT EXISTS category (
-  id TEXT PRIMARY KEY, name TEXT UNIQUE NOT NULL, created_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE TABLE IF NOT EXISTS sermon (
-  id TEXT PRIMARY KEY, title TEXT NOT NULL, speaker TEXT NOT NULL, date_preached TEXT NOT NULL,
-  description TEXT NOT NULL DEFAULT '', cover_image_url TEXT, media_type TEXT NOT NULL DEFAULT 'audio',
-  media_url TEXT NOT NULL, downloadable_file_url TEXT,
-  created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE TABLE IF NOT EXISTS sermon_category (
-  sermon_id TEXT NOT NULL REFERENCES sermon(id) ON DELETE CASCADE,
-  category_id TEXT NOT NULL REFERENCES category(id) ON DELETE CASCADE,
-  PRIMARY KEY (sermon_id, category_id)
-);
-CREATE TABLE IF NOT EXISTS event (
-  id TEXT PRIMARY KEY, title TEXT NOT NULL, description TEXT NOT NULL DEFAULT '',
-  event_date TEXT NOT NULL, location TEXT NOT NULL DEFAULT '',
-  created_at TEXT NOT NULL DEFAULT (datetime('now')), updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-);
-CREATE TABLE IF NOT EXISTS event_media (
-  id TEXT PRIMARY KEY, event_id TEXT NOT NULL REFERENCES event(id) ON DELETE CASCADE,
-  type TEXT NOT NULL, file_url TEXT NOT NULL, original_name TEXT NOT NULL DEFAULT '',
-  sort_order INTEGER NOT NULL DEFAULT 0
-);
-`);
+// Same schema src/lib/db.ts creates — kept in scripts/schema.mjs since this
+// plain script can't import db.ts (it uses the `@/` path alias, which only
+// Next's bundler resolves). Running it here means this script also works
+// standalone, before the Next.js server has ever created the tables.
+db.exec(SCHEMA);
 
 const defaultCategories = ["Relationship", "Faith", "Prayer", "Intimacy", "Warfare", "Bible Study"];
 const insertCategory = db.prepare("INSERT OR IGNORE INTO category (id, name) VALUES (?, ?)");
@@ -61,9 +34,11 @@ for (const name of defaultCategories) insertCategory.run(crypto.randomUUID(), na
 
 const existingSermons = db.prepare("SELECT COUNT(*) AS count FROM sermon").get().count;
 const existingEvents = db.prepare("SELECT COUNT(*) AS count FROM event").get().count;
-if ((existingSermons > 0 || existingEvents > 0) && !force) {
+const existingAnnouncements = db.prepare("SELECT COUNT(*) AS count FROM announcement").get().count;
+const existingGalleryItems = db.prepare("SELECT COUNT(*) AS count FROM gallery_item").get().count;
+if ((existingSermons > 0 || existingEvents > 0 || existingAnnouncements > 0 || existingGalleryItems > 0) && !force) {
   console.log(
-    `Database already has ${existingSermons} sermon(s) and ${existingEvents} event(s) — skipping. Pass --force to add demo rows anyway.`
+    `Database already has ${existingSermons} sermon(s), ${existingEvents} event(s), ${existingAnnouncements} announcement(s), and ${existingGalleryItems} gallery item(s) — skipping. Pass --force to add demo rows anyway.`
   );
   process.exit(0);
 }
@@ -309,5 +284,46 @@ for (const event of events) {
   }
 }
 
-console.log(`Seeded ${sermons.length} sermons and ${events.length} events.`);
-console.log("Note: sermon audio and event photos/flyers are small placeholder files (silent audio, solid-color images) — swap them for real media from the admin dashboard whenever you're ready.");
+const announcements = [
+  {
+    title: "New Members Class Starting",
+    message: "A four-week class for anyone new to the family, covering our mandate, pillars, and how to get plugged in. Sign up at the welcome desk.",
+    image: eventPhoto1,
+  },
+  {
+    title: "Choir Rehearsal Moved to Thursdays",
+    message: "Starting this week, choir rehearsal moves from Tuesdays to Thursdays at 6pm. Same venue.",
+  },
+];
+
+const insertAnnouncement = db.prepare(
+  `INSERT INTO announcement (id, title, message, image_url, video_url) VALUES (?, ?, ?, ?, NULL)`
+);
+
+for (const announcement of announcements) {
+  const id = crypto.randomUUID();
+  const imageUrl = announcement.image ? saveFile("announcements", `${id}-image.png`, announcement.image) : null;
+  insertAnnouncement.run(id, announcement.title, announcement.message, imageUrl);
+}
+
+const galleryPhotos = [
+  makeSolidPng(800, 800, [201, 162, 39]),
+  makeSolidPng(800, 800, [28, 20, 16]),
+  makeSolidPng(800, 800, [122, 46, 29]),
+  makeSolidPng(800, 800, [156, 122, 26]),
+  makeSolidPng(800, 800, [43, 33, 25]),
+  makeSolidPng(800, 800, [93, 66, 20]),
+];
+
+const insertGalleryItem = db.prepare(
+  `INSERT INTO gallery_item (id, type, file_url, caption, sort_order) VALUES (?, 'image', ?, ?, ?)`
+);
+
+galleryPhotos.forEach((photo, index) => {
+  const id = crypto.randomUUID();
+  const url = saveFile("gallery", `${id}-photo.png`, photo);
+  insertGalleryItem.run(id, url, "", index);
+});
+
+console.log(`Seeded ${sermons.length} sermons, ${events.length} events, ${announcements.length} announcements, and ${galleryPhotos.length} gallery photos.`);
+console.log("Note: sermon audio, event/announcement photos, and gallery photos are small placeholder files (silent audio, solid-color images) — swap them for real media from the admin dashboard whenever you're ready.");

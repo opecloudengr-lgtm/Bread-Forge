@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { format, parseISO } from "date-fns";
 import type { Sermon } from "@/types";
 
@@ -15,7 +16,13 @@ export function SermonCard({ sermon }: { sermon: Sermon }) {
   }
 
   return (
-    <article className="group flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm transition-shadow hover:shadow-xl">
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.4 }}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm transition-shadow hover:shadow-xl"
+    >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-ink via-ink-soft to-gold-deep">
         {sermon.coverImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -92,6 +99,6 @@ export function SermonCard({ sermon }: { sermon: Sermon }) {
           </a>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

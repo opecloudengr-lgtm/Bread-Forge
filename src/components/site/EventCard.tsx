@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { format, isPast, parseISO } from "date-fns";
 import type { Event } from "@/types";
 
@@ -20,7 +21,13 @@ export function EventCard({ event }: { event: Event }) {
   const heroImage = images[0];
 
   return (
-    <article className="flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm transition-shadow hover:shadow-xl">
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.4 }}
+      className="flex flex-col overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-sm transition-shadow hover:shadow-xl"
+    >
       {heroImage && (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={heroImage.fileUrl} alt={event.title} className="h-56 w-full object-cover" />
@@ -77,6 +84,6 @@ export function EventCard({ event }: { event: Event }) {
           </div>
         )}
       </div>
-    </article>
+    </motion.article>
   );
 }

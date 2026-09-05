@@ -21,7 +21,7 @@ export default function AboutPage() {
           height={420}
           className="pointer-events-none absolute left-1/2 top-1/2 h-[140%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.07]"
         />
-        <div className="relative mx-auto max-w-3xl px-6 text-center">
+        <MotionSection className="relative mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
             light
             eyebrow="About Us"
@@ -34,11 +34,13 @@ export default function AboutPage() {
           <p className="mt-2 text-xs uppercase tracking-widest text-parchment/50">
             {siteConfig.mandateReferences}
           </p>
-        </div>
+        </MotionSection>
       </section>
 
       <section className="mx-auto max-w-5xl px-6 py-24">
-        <SectionHeading eyebrow="Our Pillars" title="Seven pillars that carry the mandate" />
+        <MotionSection>
+          <SectionHeading eyebrow="Our Pillars" title="Seven pillars that carry the mandate" />
+        </MotionSection>
         <div className="mt-14 space-y-6">
           {pillars.map((pillar, index) => (
             <MotionSection key={pillar.name} delay={index * 0.05} direction={index % 2 === 0 ? "left" : "right"}>

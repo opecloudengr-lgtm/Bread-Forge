@@ -91,25 +91,30 @@ to the CI run.
 ```
 src/
   app/
-    (site)/          Public pages: Home, About, Sermons, Events, Partnership, Contact
+    (site)/          Public pages: Home, About, Sermons, Events, Gallery, Partnership, Contact
     admin/
       login|forgot-password|reset-password/   Public auth pages
-      (dashboard)/    Protected admin: dashboard, sermons, events, categories CRUD
-    api/              Route handlers (auth, categories, sermons, events)
+      (dashboard)/    Protected admin: dashboard, sermons, events, announcements, gallery, categories
+    api/              Route handlers (auth, categories, sermons, events, announcements, gallery)
     media/[...path]/   Streams uploaded files from disk (supports HTTP Range for audio/video seeking)
   components/
-    site/             Public-facing UI (Navbar, Hero, cards, browsers, motion wrapper)
-    admin/            Dashboard UI (forms, shell, auth forms)
+    site/             Public-facing UI (Navbar, Hero, cards, browsers, gallery grid/lightbox, motion wrapper)
+    admin/            Dashboard UI (forms, shell, auth forms, gallery manager)
   lib/
     db.ts             SQLite connection, schema, admin auto-seed
-    repositories/     Data access (admin, category, sermon, event)
+    repositories/     Data access (admin, category, sermon, event, announcement, gallery)
     auth.ts / session.ts   JWT session issuing/verification
     uploads.ts         File validation + disk persistence
     mailer.ts          Password-reset email (SMTP or console fallback)
     rate-limit.ts       In-memory rate limiting for login/forgot-password
   proxy.ts            Route protection for /admin/* (Next 16's middleware replacement)
+scripts/
+  schema.mjs           SQL schema shared by init-db.mjs and seed-demo.mjs (kept in sync with db.ts)
+  init-db.mjs           Creates the db file/schema once, serially, before `next build`'s workers start
+  seed-demo.mjs          Sample sermons/events/announcements/gallery photos for demos
+  set-admin.mjs          Create/update the admin account from .env regardless of prior state
 data/                 SQLite database file (gitignored)
-storage/uploads/       Uploaded sermon/event files (gitignored)
+storage/uploads/       Uploaded files (gitignored) — sermons, events, announcements, gallery
 ```
 
 ## How it maps to the PRD
@@ -134,6 +139,14 @@ storage/uploads/       Uploaded sermon/event files (gitignored)
   animations via Framer Motion, mobile-first responsive layout.
 - **Non-functional** — rate limiting on login/forgot-password, HTTP Range support for seeking in
   audio/video, path-traversal-safe file serving, indexable metadata per page.
+
+Two features beyond the original PRD, added on request:
+
+- **Announcements** — general notices with an optional image and/or video, deliberately with no date or
+  location field (unlike Events) — for things like a schedule change or a new class starting. They show
+  on the public Events page under an "Announcements" section, and have their own admin CRUD.
+- **Gallery** — a public `/gallery` page (grid + click-to-enlarge lightbox, image or video) fed by an admin
+  page that bulk-uploads photos/videos with an optional shared caption.
 
 ## Scaling beyond v1
 

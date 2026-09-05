@@ -8,6 +8,8 @@ const navItems = [
   { href: "/admin", label: "Dashboard", exact: true },
   { href: "/admin/sermons", label: "Sermons" },
   { href: "/admin/events", label: "Events" },
+  { href: "/admin/announcements", label: "Announcements" },
+  { href: "/admin/gallery", label: "Gallery" },
   { href: "/admin/categories", label: "Categories" },
 ];
 

@@ -12,12 +12,14 @@ export const metadata: Metadata = {
 export default function PartnershipPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-20">
-      <SectionHeading
-        align="left"
-        eyebrow="Partnership & Giving"
-        title="Adullam Kingdom Stewards"
-        description={`AKS is the partnership arm of ${siteConfig.ministry} — a company of stewards who give proactively toward the mandate and toward benevolence in the community.`}
-      />
+      <MotionSection>
+        <SectionHeading
+          align="left"
+          eyebrow="Partnership & Giving"
+          title="Adullam Kingdom Stewards"
+          description={`AKS is the partnership arm of ${siteConfig.ministry} — a company of stewards who give proactively toward the mandate and toward benevolence in the community.`}
+        />
+      </MotionSection>
 
       <MotionSection delay={0.05} className="mt-8">
         <div className="rounded-2xl border border-gold/30 bg-white p-8 text-center shadow-sm">

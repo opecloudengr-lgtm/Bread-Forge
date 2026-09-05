@@ -32,3 +32,12 @@ export const eventFieldsSchema = z.object({
   eventDate: z.string().trim().min(1),
   location: z.string().trim().max(300).default(""),
 });
+
+export const announcementFieldsSchema = z.object({
+  title: z.string().trim().min(1).max(200),
+  message: z.string().trim().max(5000).default(""),
+});
+
+export const galleryCaptionSchema = z.object({
+  caption: z.string().trim().max(200).default(""),
+});

@@ -14,7 +14,7 @@ export const MAX_MEDIA_BYTES = 300 * 1024 * 1024; // 300MB — sermon/event audi
 export const MAX_DOCUMENT_BYTES = 25 * 1024 * 1024; // 25MB — PDFs
 export const MAX_IMAGE_BYTES = 15 * 1024 * 1024; // 15MB — cover images / photos
 
-export type UploadSubdir = "sermons" | "covers" | "events";
+export type UploadSubdir = "sermons" | "covers" | "events" | "announcements" | "gallery";
 
 export class UploadValidationError extends Error {}
 

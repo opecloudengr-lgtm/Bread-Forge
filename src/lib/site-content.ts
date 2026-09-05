@@ -30,6 +30,7 @@ export const siteConfig = {
     { label: "About", href: "/about" },
     { label: "Sermons", href: "/sermons" },
     { label: "Events", href: "/events" },
+    { label: "Gallery", href: "/gallery" },
     { label: "Partnership", href: "/partnership" },
     { label: "Contact", href: "/contact" },
   ],

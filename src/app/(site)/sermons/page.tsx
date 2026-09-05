@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MotionSection } from "@/components/site/MotionSection";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { SermonBrowser } from "@/components/site/SermonBrowser";
 import { listSermons } from "@/lib/repositories/sermon";
@@ -17,12 +18,14 @@ export default function SermonsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-20">
-      <SectionHeading
-        align="left"
-        eyebrow="Sermons"
-        title="Teaching & Preaching Archive"
-        description="Every message is free to stream or download."
-      />
+      <MotionSection>
+        <SectionHeading
+          align="left"
+          eyebrow="Sermons"
+          title="Teaching & Preaching Archive"
+          description="Every message is free to stream or download."
+        />
+      </MotionSection>
       <div className="mt-12">
         <SermonBrowser initialSermons={sermons} categories={categories} />
       </div>
