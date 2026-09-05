@@ -58,6 +58,25 @@ the admin dashboard whenever you're ready to go live.
 - `npm run start` — run the production build
 - `npm run lint` — ESLint
 - `npm run seed:demo` — add sample sermons/events for demos (see above)
+- `npm run admin:set` — create or update the admin account from the current `ADMIN_EMAIL`/`ADMIN_PASSWORD` in `.env` (see below)
+
+### Troubleshooting: "Invalid email or password" on first login
+
+The admin account auto-creates only **once** — the very first time the server starts against an empty
+database. If the server ever started even briefly with different values in `ADMIN_EMAIL`/`ADMIN_PASSWORD`
+than you meant to use (e.g. `.env.example`'s values, before you'd finished editing `.env`), that account
+is what got created, and later edits to `.env` won't change it — the database already has an admin row,
+so the auto-seed silently does nothing on every later start.
+
+Fix it with:
+
+```bash
+npm run admin:set
+```
+
+This applies whatever is currently in `.env` to the admin account regardless of what was seeded before —
+safe to run any time, including as the normal way to change the password without going through the
+Forgot Password email flow.
 
 ## CI
 
