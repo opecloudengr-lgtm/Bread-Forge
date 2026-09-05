@@ -39,7 +39,9 @@ export default function AboutPage() {
                 </span>
                 <div>
                   <h3 className="font-display text-xl font-semibold text-ink">{pillar.name}</h3>
-                  <p className="mt-2 leading-relaxed text-ink/70">{pillar.description}</p>
+                  <p className="mt-2 whitespace-pre-line leading-relaxed text-ink/70">
+                    {pillar.full ?? pillar.summary}
+                  </p>
                 </div>
               </div>
             </MotionSection>

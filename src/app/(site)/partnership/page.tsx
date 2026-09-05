@@ -46,19 +46,27 @@ export default function PartnershipPage() {
             <dt className="text-parchment/60">Bank</dt>
             <dd className="font-semibold">{givingInfo.bankName}</dd>
           </div>
+          {givingInfo.accounts.map((account) => (
+            <div key={account.currency} className="flex justify-between border-b border-white/10 pb-2">
+              <dt className="text-parchment/60">Account ({account.currency})</dt>
+              <dd className="font-semibold">{account.number}</dd>
+            </div>
+          ))}
           <div className="flex justify-between border-b border-white/10 pb-2">
-            <dt className="text-parchment/60">Account Name</dt>
-            <dd className="font-semibold">{givingInfo.accountName}</dd>
+            <dt className="text-parchment/60">Sort Code</dt>
+            <dd className="font-semibold">{givingInfo.sortCode}</dd>
           </div>
           <div className="flex justify-between pb-2">
-            <dt className="text-parchment/60">Account Number</dt>
-            <dd className="font-semibold">{givingInfo.accountNumber}</dd>
+            <dt className="text-parchment/60">Swift Code</dt>
+            <dd className="font-semibold">{givingInfo.swiftCode}</dd>
           </div>
         </dl>
+        <p className="mt-4 text-xs text-parchment/60">{givingInfo.givingNote}</p>
         <p className="mt-4 text-xs text-parchment/50">
           Online giving is not yet available in-app — please give directly using the account details
-          above. Thank you for sowing into the Kingdom.
+          above.
         </p>
+        <p className="mt-4 text-sm italic text-gold-light">{givingInfo.blessing}</p>
       </MotionSection>
     </div>
   );

@@ -29,7 +29,7 @@ export default function HomePage() {
             <MotionSection key={pillar.name} delay={index * 0.05}>
               <div className="h-full rounded-2xl border border-ink/10 bg-white p-6 shadow-sm transition-shadow hover:shadow-lg">
                 <p className="font-display text-lg font-semibold text-gold-deep">{pillar.name}</p>
-                <p className="mt-2 text-sm leading-relaxed text-ink/70">{pillar.description}</p>
+                <p className="mt-2 text-sm leading-relaxed text-ink/70">{pillar.summary}</p>
               </div>
             </MotionSection>
           ))}
