@@ -21,7 +21,7 @@ export default function SermonsPage() {
         align="left"
         eyebrow="Sermons"
         title="Teaching & Preaching Archive"
-        description="Every message is free to stream or download — no login required."
+        description="Every message is free to stream or download."
       />
       <div className="mt-12">
         <SermonBrowser initialSermons={sermons} categories={categories} />

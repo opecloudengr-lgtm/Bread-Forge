@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { MotionSection } from "@/components/site/MotionSection";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { pillars, siteConfig } from "@/lib/site-content";
@@ -11,8 +12,16 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-ink py-24 text-parchment">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+      <section className="relative overflow-hidden bg-ink py-24 text-parchment">
+        <Image
+          src="/brand/accn-logo.png"
+          alt=""
+          aria-hidden
+          width={316}
+          height={420}
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[140%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.07]"
+        />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <SectionHeading
             light
             eyebrow="About Us"
