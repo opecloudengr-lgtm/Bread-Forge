@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #1c1410;
+  --color-ink-soft: #2b2119;
+  --color-parchment: #faf6ee;
+  --color-parchment-dim: #f1e9d8;
+  --color-gold: #c9a227;
+  --color-gold-light: #e4c661;
+  --color-gold-deep: #9c7a1a;
+  --color-ember: #7a2e1d;
+
+  --background: var(--color-parchment);
+  --foreground: var(--color-ink);
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-parchment: var(--color-parchment);
+  --color-parchment-dim: var(--color-parchment-dim);
+  --color-gold: var(--color-gold);
+  --color-gold-light: var(--color-gold-light);
+  --color-gold-deep: var(--color-gold-deep);
+  --color-ember: var(--color-ember);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+.bg-grain {
+  background-image: radial-gradient(circle at 1px 1px, rgba(28, 20, 16, 0.05) 1px, transparent 0);
+  background-size: 22px 22px;
+}
